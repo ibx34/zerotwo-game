@@ -22,5 +22,5 @@ class Card:
     type: Rarity
     stats: Stats
     name: str
-    series: strs
+    series: str
     id: int
