@@ -3,10 +3,8 @@ from discord.ext import commands
 import asyncio
 from copy import deepcopy
 from typing import List
-#from .abc import Dialog
 
-
-class EmbedPaginator:#(Dialog):
+class EmbedPaginator:
     """ Represents an interactive menu containing multiple embeds. """
 
     def __init__(self, client: discord.Client, pages: [discord.Embed], message: discord.Message = None):
