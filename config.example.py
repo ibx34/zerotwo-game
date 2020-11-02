@@ -13,3 +13,5 @@ EXTENSIONS = ['jishaku']
 ## Guild: Your bot's default guild. Developer logs and other logs' channels will be here
 GUILD = 123456789
 
+## Color: Your bot's main color. Used on the image embeds (Default will always be #ffb6c1)
+COLOR = 0xffb6c1

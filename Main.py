@@ -1,12 +1,15 @@
 import os
-import sys
 import random
-import config
-import discord
+import sys
+
 import aiohttp
-import asyncpg
 import aioredis
+import asyncpg
+import discord
 from discord.ext import commands
+
+import config
+
 
 class ZeroTwo(commands.Bot):
     def __init__(self):
@@ -15,7 +18,16 @@ class ZeroTwo(commands.Bot):
             case_insensitive=True,
             reconnect=True,
             status=discord.Status.idle,
-            intents=discord.Intents(messages=True, guilds=True, members=True, guild_messages=True, dm_messages=True, reactions=True, guild_reactions=True, dm_reactions=True)
+            intents=discord.Intents(
+                messages=True,
+                guilds=True,
+                members=True,
+                guild_messages=True,
+                dm_messages=True,
+                reactions=True,
+                guild_reactions=True,
+                dm_reactions=True,
+            ),
         )
         self.config = config
         self.session = None
@@ -39,7 +51,7 @@ class ZeroTwo(commands.Bot):
 
     async def on_ready(self):
 
-        await self.change_presence(status=discord.Status.online)
+        await self.change_presence(status=discord.Status.online,activity=discord.Activity(type=discord.ActivityType.listening, name='The Kiss of Death'))
         print(f"Bot started. Guilds: {len(self.guilds)} Users: {len(self.users)}")
 
     async def on_message(self, message):
@@ -50,11 +62,11 @@ class ZeroTwo(commands.Bot):
         ctx = await self.get_context(message)
 
         if ctx.command:
-            await self.process_commands(message)
+            await self.process_commands(message, ctx)
 
-    async def process_commands(self, message):
+    async def process_commands(self, message, ctx):
 
-        ctx = await self.get_context(message)
+        # ctx = await self.get_context(message)
 
         if ctx.command is None:
             return
