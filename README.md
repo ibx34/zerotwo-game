@@ -9,9 +9,9 @@ Basic startup:
 ## Todo
 - [x] Create basic card structure  
 - [x] Add random message thingy  
-- [] Add more characters  
-- [] Work on better help  
-- [] Add oni-chan command (response https://youtu.be/XLj9QtidiTo)  
-- [] Add card suggestion command  
-- [] Add user "inventories" of cards   
-- [] Add starting cards  
+- [ ] Add more characters  
+- [ ] Work on better help  
+- [ ] Add oni-chan command (response https://youtu.be/XLj9QtidiTo)  
+- [ ] Add card suggestion command  
+- [ ] Add user "inventories" of cards   
+- [ ] Add starting cards  
