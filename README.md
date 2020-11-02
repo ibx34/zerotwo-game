@@ -15,3 +15,7 @@ Basic startup:
 - [ ] Add card suggestion command  
 - [ ] Add user "inventories" of cards   
 - [ ] Add starting cards  
+
+## Contributors 
+
+* [A5rocks EXPLOSION](https://github.com/A5rocks)
