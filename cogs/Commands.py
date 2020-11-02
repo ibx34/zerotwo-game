@@ -11,7 +11,9 @@ import discord
 import images
 from discord.ext import commands
 
+from cogs.Error import is_dev, on_cooldown
 from cogs.utils import Pagintation
+
 
 def leftpad(string: str, amount: int) -> str:
   return ' ' * (amount - len(string)) + string
@@ -20,6 +22,11 @@ def leftpad(string: str, amount: int) -> str:
 class Commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
+    @commands.command(name="oni-chan")
+    async def _onichan(self,ctx):
+
+        await ctx.channel.send("https://youtu.be/XLj9QtidiTo")
 
     @commands.command(name="start")
     async def _start(self,ctx):

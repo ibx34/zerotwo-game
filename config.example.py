@@ -8,7 +8,7 @@ PREFIX = "abc"
 OWNRES = [123456789]
 
 ## Extensions: Basically modules (cogs/)
-EXTENSIONS = ['jishaku','cogs.Commands','cogs.Message']
+EXTENSIONS = ['jishaku','cogs.Commands','cogs.Message', 'cogs.Error']
 
 ## Guild: Your bot's default guild. Developer logs and other logs' channels will be here
 GUILD = 123456789
