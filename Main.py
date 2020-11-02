@@ -1,3 +1,4 @@
+import collections
 import os
 import random
 import sys
@@ -34,6 +35,7 @@ class ZeroTwo(commands.Bot):
         self.pool = None
         self.redis = None
         self.used = 0
+        self.cards = collections.defaultdict(lambda: str)
 
     async def get_pre(self, bot, message):
 
@@ -50,6 +52,8 @@ class ZeroTwo(commands.Bot):
         await super().start(config.TOKEN)
 
     async def on_ready(self):
+        self.pool = await asyncpg.create_pool(**config.DB, max_size=150)
+        self.redis = await aioredis.create_redis_pool("redis://localhost", loop=self.loop)
 
         await self.change_presence(status=discord.Status.online,activity=discord.Activity(type=discord.ActivityType.listening, name='The Kiss of Death'))
         print(f"Bot started. Guilds: {len(self.guilds)} Users: {len(self.users)}")

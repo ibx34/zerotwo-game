@@ -8,10 +8,18 @@ PREFIX = "abc"
 OWNRES = [123456789]
 
 ## Extensions: Basically modules (cogs/)
-EXTENSIONS = ['jishaku']
+EXTENSIONS = ['jishaku','cogs.Commands','cogs.Message']
 
 ## Guild: Your bot's default guild. Developer logs and other logs' channels will be here
 GUILD = 123456789
 
 ## Color: Your bot's main color. Used on the image embeds (Default will always be #ffb6c1)
 COLOR = 0xffb6c1
+
+## Database: How user data will be stored (Uses postgresql)
+DB = {
+    "host": "localhost",
+    "database": "database",
+    "user": "user",
+    "password": "password",
+}

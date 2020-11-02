@@ -45,6 +45,7 @@ class CardSender(commands.Cog):
             embed.set_image(url=card.url)
             await message.channel.send(embed=embed)
             self.message_count[message.channel.id] = 0
+            self.bot.cards[message.channel.id] = card.name
 
 def setup(bot):
     bot.add_cog(CardSender(bot))
