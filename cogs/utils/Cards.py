@@ -25,3 +25,4 @@ class Card:
     stats: Stats
     name: str
     series: str
+    id: int

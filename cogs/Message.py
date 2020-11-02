@@ -29,8 +29,7 @@ class CardSender(commands.Cog):
 
         self.message_count[message.channel.id] += 1
 
-        #if self.message_count[message.channel.id] > random.randint(44,71) and random.random() < 0.65:
-        if self.message_count[message.channel.id] > 5:
+        if self.message_count[message.channel.id] > random.randint(44,71) and random.random() < 0.65:
             card = random.choice(images.cards)
             amount_of_space = len('{:_}'.format(max(card.stats.price, card.stats.damage, card.stats.health)))
             embed = discord.Embed(color=config.COLOR,description=dedent(f"""
@@ -45,7 +44,7 @@ class CardSender(commands.Cog):
             embed.set_image(url=card.url)
             await message.channel.send(embed=embed)
             self.message_count[message.channel.id] = 0
-            self.bot.cards[message.channel.id] = card.name
+            self.bot.cards[message.channel.id] = card
 
 def setup(bot):
     bot.add_cog(CardSender(bot))
