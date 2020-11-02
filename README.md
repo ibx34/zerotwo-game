@@ -8,11 +8,12 @@ Self hosting is currently not-supported. Please join our [support server](https:
 - [x] Add random message thingy  
 - [x] Add `zt!claim` to claim cards
 - [ ] Add more characters  
-- [ ] Work on better help  
-- [ ] Add oni-chan command (response https://youtu.be/XLj9QtidiTo)  
+- [x] Work on better help  
+- [x] Add oni-chan command (response https://youtu.be/XLj9QtidiTo)  
 - [ ] Add card suggestion command  
-- [ ] Add user "inventories" of cards   
+- [x] Add user "inventories" of cards   
 - [ ] Add starting cards  
+- [ ] better how cards are handled
 
 ## Contributors 
 
