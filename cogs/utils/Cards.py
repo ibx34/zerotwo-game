@@ -1,8 +1,6 @@
 import dataclasses
 import enum
 
-import dataclasses
-import enum
 
 class Rarity(enum.Enum):
     MYSTIC = "Mystic"
@@ -24,5 +22,5 @@ class Card:
     type: Rarity
     stats: Stats
     name: str
-    series: str
+    series: strs
     id: int
