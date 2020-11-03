@@ -12,7 +12,7 @@ import images
 from discord.ext import commands
 
 from cogs.Error import is_dev, on_cooldown
-from cogs.utils import Pagintation
+from cogs.utils import Pagintation, Resonder
 
 
 def leftpad(string: str, amount: int) -> str:
@@ -31,17 +31,24 @@ class Commands(commands.Cog):
     @commands.command(name="start")
     async def _start(self,ctx):
         async with self.bot.pool.acquire() as conn:
+            user = await conn.fetchrow("SELECT * FROM zt_user WHERE id = $1 AND guild = $2",ctx.author.id,ctx.channel.guild.id)
+
+            if user:
+                return await ctx.channel.send(f"**{ctx.author.name}**, You... you've already started **REEEEEEE :(")
             try:
                 await conn.execute("INSERT INTO zt_user(id,guild) VALUES($1,$2)",ctx.author.id,ctx.channel.guild.id)
             except:
                 return await ctx.channel.send(f"Owno something went wrong~! Sowwy :(")
             
-            await ctx.channel.send("**Congwats~!** you can now start collecting them sick anime babes :sunglasses:")
+            await ctx.channel.send(f"**{ctx.author.name}**, **Congwats~!** you can now start collecting them sick anime babes :sunglasses:")
 
     @commands.command(name="my")
     async def _my(self,ctx):
         async with self.bot.pool.acquire() as conn:
             user = await conn.fetchrow("SELECT * FROM zt_user WHERE id = $1 AND guild = $2",ctx.author.id,ctx.channel.guild.id)
+
+            if user['other_characters'] == "{}":
+                return await ctx.channel.send(f"**{ctx.author.name}**, b-baka you have no cwards... >:(")
 
             pages = []
             for x in user['other_characters']:
@@ -70,17 +77,16 @@ class Commands(commands.Cog):
             user = await conn.fetchrow("SELECT * FROM zt_user WHERE id = $1 AND guild = $2",ctx.author.id,ctx.channel.guild.id)
 
             if not user:
-                del self.bot.cards[ctx.channel.id]
                 return await ctx.channel.send(f"**{ctx.author.name}**, it doesn't seem you like you even exist... run `zt!start` to get started, b-baka~!")
 
             if ctx.channel.id not in self.bot.cards:
-                del self.bot.cards[ctx.channel.id]
+                # del self.bot.cards[ctx.channel.id]
                 return await ctx.channel.send(f"**{ctx.author.name}**, there is no cards to collect! B-baka >:(")
 
             card = self.bot.cards[ctx.channel.id]
-            del self.bot.cards[ctx.channel.id]
             if card.id in user['other_characters'] or card.id == user['main_characters']:
-                return await ctx.channel.send(f"**{ctx.author.name}**,")
+                del self.bot.cards[ctx.channel.id]
+                return await ctx.channel.send(f"**{ctx.author.name}**, you already own that card, b-baka ~~!")
             
             try:
                 list = [x for x in user['other_characters']]
@@ -89,8 +95,9 @@ class Commands(commands.Cog):
             except Exception as err:
                 print(err)
                 return await ctx.channel.send(f"Owno something went wrong~! Sowwy :(")
-                
-            await ctx.channel.send(f"**{ctx.author.name}**, WooHoo~! You collected a **{card.type.value}** **{card.name}**")       
+            
+            await ctx.channel.send(Resonder.respond(message=random.choice(Resonder.responses['claim']['success']),user=ctx.author,channel=ctx.channel,card=card))
+            #await ctx.channel.send(f"**{ctx.author.name}**, WooHoo~! You collected a **{card.type.value}** **{card.name}**")       
 
 def setup(bot):
     bot.add_cog(Commands(bot))

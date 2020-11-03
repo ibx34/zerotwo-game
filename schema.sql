@@ -2,8 +2,8 @@ CREATE TABLE
 IF NOT EXISTS zt_guild
 (
     "id" BIGINT PRIMARY KEY,
-    "prefix" VARCHAR
-(512)
+    "prefix" VARCHAR(512),
+    "disabled" BIGINT[] DEFAULT '{}'
 );
 
 CREATE TABLE 

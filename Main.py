@@ -36,10 +36,17 @@ class ZeroTwo(commands.Bot):
         self.redis = None
         self.used = 0
         self.cards = {}
+        self.prefixes = {}
 
     async def get_pre(self, bot, message):
-
-        return commands.when_mentioned_or(config.PREFIX)(bot, message)
+        if not message.guild:
+            return commands.when_mentioned_or(config.PREFIX)(bot, message)
+        try:
+            guild_prefix = bot.prefixes[message.guild.id]
+            if guild_prefix:
+                return commands.when_mentioned_or(guild_prefix)(bot, message)
+        except KeyError:
+            return commands.when_mentioned_or(config.PREFIX)(bot, message)
 
     async def start(self):
         self.session = aiohttp.ClientSession(loop=self.loop)
@@ -60,6 +67,9 @@ class ZeroTwo(commands.Bot):
                 await self.pool.execute(f.read())
         except Exception as e:
             print(e)
+
+        for i in await self.pool.fetch("SELECT * FROM zt_guild"):
+            self.prefixes[i["id"]] = i["prefix"]
 
         await self.change_presence(status=discord.Status.online,activity=discord.Activity(type=discord.ActivityType.listening, name='The Kiss of Death'))
         print(f"Bot started. Guilds: {len(self.guilds)} Users: {len(self.users)}")
@@ -83,7 +93,14 @@ class ZeroTwo(commands.Bot):
 
         self.used += 1
         await self.invoke(ctx)
+    
+   async def on_guild_join(self, guild):
 
+        try:
+            await self.pool.execute("INSERT INTO zt_guild(id,prefix) VALUES($1,$2)", guild.id, config.PREFIX)
+            self.prefixes[guild.id] = config.PREFIX
+        except Exception as err:
+            print(err)
 
 if __name__ == "__main__":
     ZeroTwo().run()
